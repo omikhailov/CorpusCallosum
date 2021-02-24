@@ -1,0 +1,7 @@
+﻿<Application
+    x:Class="UwpTests_for_UWP_10._0._10240.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpTests_for_UWP_10._0._10240">
+
+</Application>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>06b6ccfb-0cb4-4e2e-9f15-eacb9b15346a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CorpusCollosum</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Channel.partial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InboundChannel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutboundChannel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ChannelState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\Acl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\AsyncHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\LifecycleHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\Header.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\MemoryManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\Node.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReaderMemoryManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\AsynchronousReadingOperationWithoutResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\ReadingOperationWithoutResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WriterMemoryManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OperationStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OperationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\AsynchronousReadingOperation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\AsynchronousReadingOperationWithCancellation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\AsynchronousReadingOperationWithParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\AsynchronousReadingOperationWithoutParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\ReadingOperationWithoutParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\ReadingOperation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\ReadingOperationWithCancellation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\ReadingOperations\ReadingOperationWithParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\AsynchronousWritingOperationWithoutResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\WritingOperationWithoutResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\WritingOperationWithoutParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\AsynchronousWritingOperation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\AsynchronousWritingOperationWithoutParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\AsynchronousWritingOperationWithParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\AsynchronousWritingOperationWithCancellation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\WritingOperationWithCancellation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\WritingOperationWithParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedObjects\MemoryManagement\WritingOperations\WritingOperation.cs" />
+  </ItemGroup>
+</Project>

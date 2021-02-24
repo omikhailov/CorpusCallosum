@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>CorpusCallosum</AssemblyName>
+    <RootNamespace>CorpusCallosum</RootNamespace>
+    <Authors>Oleg Mikhailov</Authors>
+    <Description>Library for interprocess communication between noncontainerized .Net and containerized UWP apps and services</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;UWP;DOTNETSTANDARD_2_0;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;UWP;DOTNETSTANDARD_2_0;</DefineConstants>
+  </PropertyGroup>
+
+  <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <Compile Include="..\..\DotNetFramework\Channel.Open.Global.Noncontainerized.partial.cs" Link="Channel.Open.Global.Noncontainerized.partial.cs" />
+    <Compile Include="..\..\DotNetFramework\Channel.Open.Local.Noncontainerized.partial.cs" Link="Channel.Open.Local.Noncontainerized.partial.cs" />
+    <Compile Include="..\10.0.10240\Channel.Create.partial.cs" Link="Channel.Create.partial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.MemoryMappedFiles" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

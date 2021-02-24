@@ -227,6 +227,7 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+!Samples/UwpShellForWindowsService/UwpClient/UwpClient_TemporaryKey.pfx
 *.publishsettings
 orleans.codegen.cs
 
