@@ -7,6 +7,7 @@ The class responsible for communication between processes is called *Channel*, i
 - *Inbound* for reading or *Outbound* for writing.
 - *Global*, visible from all user sessions, or *Local*, visible only from current user session.
 - *Noncontainerized*, created from a normal Win32 process, or *Containerized*, created from UWP app running in the app container.
+
 Further, the process that creates the channel and configures access control rules will be called *Server* and another process opening the channel - *Client*.
 
 UWP apps can create both inbound and outbound channels, but they are limited to creating local channels only. They can open both inbound and outbound, local and global channels when server explicitly whitelisted app container's SID.
