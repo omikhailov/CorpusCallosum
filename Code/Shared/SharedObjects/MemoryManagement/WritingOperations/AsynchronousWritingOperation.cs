@@ -28,5 +28,12 @@ namespace CorpusCallosum.SharedObjects.MemoryManagement.WritingOperations
     internal abstract class AsynchronousWritingOperation
     {
         public abstract Task<OperationStatus> WriteAsync(MemoryMappedFile file, long offset, long length);
+
+        protected OperationStatus GetAllowedExecutionStatus(OperationStatus original)
+        {
+            if (original == OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace || original == OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace) return OperationStatus.DelegateFailed;
+
+            return original;
+        }
     }
 }

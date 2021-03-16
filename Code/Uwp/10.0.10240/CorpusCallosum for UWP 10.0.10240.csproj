@@ -6,7 +6,8 @@
     <RootNamespace>CorpusCallosum</RootNamespace>
     <Authors>Oleg Mikhailov</Authors>
     <Company />
-    <Description>Library for interprocess communication between noncontainerized .Net and containerized UWP apps and services</Description>
+    <Description>Library for interprocess communication between containerized UWP apps and noncontainerized .Net applications and services</Description>
+    <Version>1.0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,6 +16,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>TRACE;UWP;DOTNETSTANDARD_1_3;</DefineConstants>
+    <DocumentationFile>E:\cc\Code\Uwp\10.0.10240\CorpusCallosum.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

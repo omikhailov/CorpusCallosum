@@ -24,6 +24,9 @@ using CorpusCallosum.SharedObjects.MemoryManagement;
 
 namespace CorpusCallosum
 {
+    /// <summary>
+    /// The state of the channel afer operation.
+    /// </summary>
     public class ChannelState
     {
         internal ChannelState(Header header)
@@ -33,8 +36,14 @@ namespace CorpusCallosum
             MessagesCount = header.ActiveNodes;
         }
 
+        /// <summary>
+        /// Number of bytes allocated for memory mapped file.
+        /// </summary>
         public long AllocatedSpace { get; }
 
+        /// <summary>
+        /// Number of messages in the queue.
+        /// </summary>
         public long MessagesCount { get; }
     }
 }

@@ -22,6 +22,9 @@
 
 namespace CorpusCallosum
 {
+    /// <summary>
+    /// Operation result.
+    /// </summary>
     public class OperationResult<T>
     {
         internal OperationResult(OperationStatus status, T data)
@@ -31,8 +34,14 @@ namespace CorpusCallosum
             Data = data;
         }
 
+        /// <summary>
+        /// Status of the operation.
+        /// </summary>
         public OperationStatus Status { get; internal set; }
 
+        /// <summary>
+        /// Data obtained as a result of the operation.
+        /// </summary>
         public T Data { get; internal set; }
     }
 }

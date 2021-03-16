@@ -57,12 +57,34 @@ namespace CorpusCallosum.SharedObjects
 
         public static OperationResult<MemoryMappedFile> CreateMemoryMappedFile(string channelName, long capacity, Acl acl)
         {
+            OperationStatus CheckExistance(string fileName)
+            {
+                MemoryMappedFile file = null;
+
+                try
+                {
+                    file = MemoryMappedFile.OpenExisting(fileName);
+
+                    return OperationStatus.ObjectAlreadyInUse;
+                }
+                catch
+                { 
+                    return OperationStatus.Completed; 
+                }
+                finally
+                {
+                    file?.Dispose();
+                }
+            }
+
             MemoryMappedFile result = null;
 
             var fullName = channelName + "_mmf";
 
             try
             {
+
+                var existanceStatus = CheckExistance(fullName);
 #if !UWP
                 var security = new MemoryMappedFileSecurity();
 
@@ -100,7 +122,7 @@ namespace CorpusCallosum.SharedObjects
                     return new OperationResult<MemoryMappedFile>(OperationStatus.CapacityIsGreaterThanLogicalAddressSpace, null);
                 }
 #endif
-                return new OperationResult<MemoryMappedFile>(OperationStatus.Completed, result);
+                return new OperationResult<MemoryMappedFile>(existanceStatus, result);
             }            
             catch
             {

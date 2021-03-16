@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CorpusCallosum.WinRT</id>
+    <version>1.0.1</version>
+    <title>CorpusCallosum.WinRT</title>
+    <authors>Oleg Mikhailov</authors>
+    <owners></owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/omikhailov/CorpusCallosum/blob/main/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/omikhailov/CorpusCallosum</projectUrl>
+    <description>Library for interprocess communication between containerized UWP apps and noncontainerized .Net applications and services. This package contains WinRT adapters for non-.Net languages.</description>
+    <tags>ipc uwp .net framework shared memory win32 winrt app container interprocess communication windows service</tags>
+  </metadata>
+  <files>
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.WinRT.winmd" target="lib\uap10.0.10240\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.WinRT.pri" target="lib\uap10.0.10240\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.WinRT.pdb" target="lib\uap10.0.10240\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.WinRT.XML" target="lib\uap10.0.10240\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.dll" target="lib\uap10.0.10240\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.pdb" target="lib\uap10.0.10240\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\Release\CorpusCallosum.xml" target="lib\uap10.0.10240\CorpusCallosum.xml" />
+    
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.WinRT.winmd" target="lib\uap10.0.16299\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.WinRT.pri" target="lib\uap10.0.16299\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.WinRT.pdb" target="lib\uap10.0.16299\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.WinRT.XML" target="lib\uap10.0.16299\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.dll" target="lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.pdb" target="lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\Release\CorpusCallosum.xml" target="lib\uap10.0.16299\CorpusCallosum.xml" />
+
+    <!-- -->
+    
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.dll" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.pdb" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\ARM\Release\CorpusCallosum.xml" target="runtimes\win10-arm\lib\uap10.0.10240\CorpusCallosum.xml" />
+
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.dll" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.pdb" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x86\Release\CorpusCallosum.xml" target="runtimes\win10-x86\lib\uap10.0.10240\CorpusCallosum.xml" />
+
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.dll" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.pdb" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.10240\bin\x64\Release\CorpusCallosum.xml" target="runtimes\win10-x64\lib\uap10.0.10240\CorpusCallosum.xml" />
+
+    <!-- -->
+    
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.dll" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.pdb" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM\Release\CorpusCallosum.xml" target="runtimes\win10-arm\lib\uap10.0.16299\CorpusCallosum.xml" />
+
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.dll" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.pdb" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\ARM64\Release\CorpusCallosum.xml" target="runtimes\win10-arm64\lib\uap10.0.16299\CorpusCallosum.xml" />
+
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.dll" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.pdb" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x86\Release\CorpusCallosum.xml" target="runtimes\win10-x86\lib\uap10.0.16299\CorpusCallosum.xml" />
+
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.WinRT.winmd" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.WinRT.winmd" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.WinRT.pri" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.WinRT.pri" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.WinRT.pdb" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.WinRT.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.WinRT.XML" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.WinRT.XML" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.dll" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.pdb" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\WinRT 10.0.16299\bin\x64\Release\CorpusCallosum.xml" target="runtimes\win10-x64\lib\uap10.0.16299\CorpusCallosum.xml" />
+  </files>
+</package>

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace CorpusCallosum
+namespace CorpusCallosum.WinRT
 {
     /// <summary>
     /// Enum indicating operation completion status

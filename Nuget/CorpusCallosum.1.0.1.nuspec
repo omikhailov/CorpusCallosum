@@ -2,19 +2,25 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CorpusCallosum</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>CorpusCallosum</title>
     <authors>Oleg Mikhailov</authors>
     <owners></owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/omikhailov/CorpusCallosum/blob/main/LICENSE</licenseUrl>
     <projectUrl>https://github.com/omikhailov/CorpusCallosum</projectUrl>
-    <description>Library for interprocess communication between noncontainerized .Net and containerized UWP apps and services</description>
+    <description>Library for interprocess communication between containerized UWP apps and noncontainerized .Net applications and services</description>
     <tags>ipc uwp .net framework shared memory win32 winrt app container interprocess communication windows service</tags>
   </metadata>
   <files>
     <file src="..\Code\DotNetFramework\bin\Release\CorpusCallosum.dll" target="lib\net46\CorpusCallosum.dll" />
+    <file src="..\Code\DotNetFramework\bin\Release\CorpusCallosum.pdb" target="lib\net46\CorpusCallosum.pdb" />
+    <file src="..\Code\DotNetFramework\bin\Release\CorpusCallosum.xml" target="lib\net46\CorpusCallosum.xml" />
     <file src="..\Code\Uwp\10.0.10240\bin\Release\netstandard1.3\CorpusCallosum.dll" target="lib\uap10.0.10240\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\10.0.10240\bin\Release\netstandard1.3\CorpusCallosum.pdb" target="lib\uap10.0.10240\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\10.0.10240\bin\Release\netstandard1.3\CorpusCallosum.xml" target="lib\uap10.0.10240\CorpusCallosum.xml" />
     <file src="..\Code\Uwp\10.0.16299\bin\Release\netstandard2.0\CorpusCallosum.dll" target="lib\uap10.0.16299\CorpusCallosum.dll" />
+    <file src="..\Code\Uwp\10.0.16299\bin\Release\netstandard2.0\CorpusCallosum.pdb" target="lib\uap10.0.16299\CorpusCallosum.pdb" />
+    <file src="..\Code\Uwp\10.0.16299\bin\Release\netstandard2.0\CorpusCallosum.xml" target="lib\uap10.0.16299\CorpusCallosum.xml" />
   </files>
 </package>

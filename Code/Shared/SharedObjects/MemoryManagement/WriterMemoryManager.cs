@@ -67,40 +67,43 @@ namespace CorpusCallosum.SharedObjects.MemoryManagement
         {
             var result = writingOperation.Write(_file, newNodeOffset + _sizeOfNode, length);
 
-            if (result == OperationStatus.Cancelled || result == OperationStatus.DelegateFailed)
+            if (result != OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace && result != OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace)
             {
-                ReturnSpaceToFreeList(newNodeOffset, length, ref header);
-            }
-            else
-            {
-                var newNode = new Node(-1, length);
-
-                Node.Write(_file, newNodeOffset, ref newNode);
-
-                if (header.TailNode >= 0)
+                if (result == OperationStatus.Cancelled || result == OperationStatus.DelegateFailed)
                 {
-                    using (var tailView = _file.CreateViewAccessor(header.TailNode, _sizeOfNode))
+                    ReturnSpaceToFreeList(newNodeOffset, length, ref header);
+                }
+                else
+                {
+                    var newNode = new Node(-1, length);
+
+                    Node.Write(_file, newNodeOffset, ref newNode);
+
+                    if (header.TailNode >= 0)
                     {
-                        var tail = Node.Read(tailView);
+                        using (var tailView = _file.CreateViewAccessor(header.TailNode, _sizeOfNode))
+                        {
+                            var tail = Node.Read(tailView);
 
-                        tail.Next = newNodeOffset;
+                            tail.Next = newNodeOffset;
 
-                        Node.Write(tailView, ref tail);
+                            Node.Write(tailView, ref tail);
+                        }
                     }
+
+                    header.TailNode = newNodeOffset;
+
+                    if (header.HeadNode < 0) header.HeadNode = newNodeOffset;
+
+                    var allocated = (newNodeOffset + _sizeOfNode + length) - header.TotalSpace;
+
+                    if (allocated > 0) header.TotalSpace += allocated;
+
+                    header.ActiveNodes += 1;
                 }
 
-                header.TailNode = newNodeOffset;
-
-                if (header.HeadNode < 0) header.HeadNode = newNodeOffset;
-
-                var allocated = (newNodeOffset + _sizeOfNode + length) - header.TotalSpace;
-
-                if (allocated > 0) header.TotalSpace += allocated;
-
-                header.ActiveNodes += 1;
+                Header.Write(_headerView, ref header);
             }
-
-            Header.Write(_headerView, ref header);
 
             return new OperationResult<ChannelState>(result, new ChannelState(header));
         }
@@ -129,40 +132,43 @@ namespace CorpusCallosum.SharedObjects.MemoryManagement
         {
             var status = await writingOperation.WriteAsync(_file, newNodeOffset + _sizeOfNode, length);
 
-            if (status == OperationStatus.Cancelled || status == OperationStatus.DelegateFailed)
+            if (status != OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace && status != OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace)
             {
-                ReturnSpaceToFreeList(newNodeOffset, length, ref header);
-            }
-            else
-            {
-                var newNode = new Node(-1, length);
-
-                Node.Write(_file, newNodeOffset, ref newNode);
-
-                if (header.TailNode >= 0)
+                if (status == OperationStatus.Cancelled || status == OperationStatus.DelegateFailed)
                 {
-                    using (var tailView = _file.CreateViewAccessor(header.TailNode, _sizeOfNode))
+                    ReturnSpaceToFreeList(newNodeOffset, length, ref header);
+                }
+                else
+                {
+                    var newNode = new Node(-1, length);
+
+                    Node.Write(_file, newNodeOffset, ref newNode);
+
+                    if (header.TailNode >= 0)
                     {
-                        var tail = Node.Read(tailView);
+                        using (var tailView = _file.CreateViewAccessor(header.TailNode, _sizeOfNode))
+                        {
+                            var tail = Node.Read(tailView);
 
-                        tail.Next = newNodeOffset;
+                            tail.Next = newNodeOffset;
 
-                        Node.Write(tailView, ref tail);
+                            Node.Write(tailView, ref tail);
+                        }
                     }
+
+                    header.TailNode = newNodeOffset;
+
+                    if (header.HeadNode < 0) header.HeadNode = newNodeOffset;
+
+                    var allocated = (newNodeOffset + _sizeOfNode + length) - header.TotalSpace;
+
+                    if (allocated > 0) header.TotalSpace += allocated;
+
+                    header.ActiveNodes += 1;
                 }
 
-                header.TailNode = newNodeOffset;
-
-                if (header.HeadNode < 0) header.HeadNode = newNodeOffset;
-
-                var allocated = (newNodeOffset + _sizeOfNode + length) - header.TotalSpace;
-
-                if (allocated > 0) header.TotalSpace += allocated;
-
-                header.ActiveNodes += 1;
+                Header.Write(_headerView, ref header);
             }
-
-            Header.Write(_headerView, ref header);
 
             return new OperationResult<ChannelState>(status, new ChannelState(header));
         }

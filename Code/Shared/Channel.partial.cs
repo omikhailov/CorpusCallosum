@@ -98,7 +98,7 @@ namespace CorpusCallosum
         /// Server is the process that creates the channel (either inbound or outbound) and set access control rules for associated shared objects.
         /// Client is the process that opens it. When called by client, this property always returns true.
         /// </summary>
-        public virtual bool IsClientConnected
+        public bool IsClientConnected
         {
             get
             {

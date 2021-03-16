@@ -20,19 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.IO.MemoryMappedFiles;
+using Internal = CorpusCallosum;
 
-namespace CorpusCallosum.SharedObjects.MemoryManagement.WritingOperations
+namespace CorpusCallosum.WinRT
 {
-    internal abstract class WritingOperation
+    /// <summary>
+    /// The state of the channel afer operation.
+    /// </summary>
+    public class ChannelState
     {
-        public abstract OperationStatus Write(MemoryMappedFile file, long offset, long length);
-
-        protected OperationStatus GetAllowedExecutionStatus(OperationStatus original)
+        internal ChannelState(Internal.ChannelState @internal)
         {
-            if (original == OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace || original == OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace) return OperationStatus.DelegateFailed;
+            AllocatedSpace = @internal.AllocatedSpace;
 
-            return original;
+            MessagesCount = @internal.MessagesCount;
         }
+
+        /// <summary>
+        /// Number of bytes allocated for memory mapped file.
+        /// </summary>
+        public long AllocatedSpace { get; }
+
+        /// <summary>
+        /// Number of messages in the queue.
+        /// </summary>
+        public long MessagesCount { get; }
     }
 }

@@ -1,0 +1,1066 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CorpusCallosum</name>
+    </assembly>
+    <members>
+        <member name="T:CorpusCallosum.Channel">
+            <summary>
+            Base class for OutboundChannel and InboundChannel
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.Channel.Name">
+            <summary>
+            Channel name. This property is thread-safe.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.Channel.Capacity">
+            <summary>
+            Maximum space allowed for allocation. This property is thread-safe.
+            If writer will try to call Write() or WriteAsync when there is not enought free space, operation will return OperationStatus.OutOfSpace.
+            Writer should call WaitWhenQueueIsEmpty() or await WhenQueueIsEmpty() to wait until reader will process all messages. 
+            As an alternative, it can use GetChannelState() to track the number of active (not processed) messages in the queue.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.Channel.IsClientConnected">
+            <summary>
+            The flag indicating that client is connected to this channel. This property is thread-safe.
+            Server is the process that creates the channel (either inbound or outbound) and set access control rules for associated shared objects.
+            Client is the process that opens it. When called by client, this property always returns true.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WaitWhenClientConnected">
+            <summary>
+            Synchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WaitWhenClientConnected(System.TimeSpan)">
+            <summary>
+            Synchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OpertionStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WaitWhenClientConnected(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Synchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OpertionStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WhenClientConnectedAsync">
+            <summary>
+            Asynchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WhenClientConnectedAsync(System.TimeSpan)">
+            <summary>
+            Asynchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OpertionStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.WhenClientConnectedAsync(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Asynchronously waits when client will open this channel. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OpertionStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelState">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <returns>
+            ChannelState with current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelState(System.TimeSpan)">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation Timeout.</param>
+            <returns>
+            OperationResult with OperationStatus.Completed or OperationStatus.Timeout as well as ChannelState indicating current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelState(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation Timeout.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>
+            OperationResult with OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled as well as ChannelState 
+            indicating current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelStateAsync">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <returns>
+            ChannelState with current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelStateAsync(System.TimeSpan)">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation Timeout.</param>
+            <returns>
+            OperationResult with OperationStatus.Completed or OperationStatus.Timeout as well as ChannelState indicating current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.GetChannelStateAsync(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Retrieves information about current state of the channel. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation Timeout.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>
+            OperationResult with OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled as well as ChannelState 
+            indicating current number of active messages in the queue
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.Dispose">
+            <summary>
+            Disposes shared objects associated with this channel.
+            Most of the resources associated with the channel and messages in the queue will stay alive until both client and server
+            will be disposed. It's ok to reconnect or recreate channel with the same parameters.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.Channel.OpenOutboundGlobalNoncontainerized(System.String)">
+            <summary>
+            Opens channel for writing. Channel must be created by process running without app container and it must be visible from all user sessions.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer),
+            OperationStatus.ObjectDoesNotExist or OperationStatus.AccessDenied
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.OpenInboundGlobalNoncontainerized(System.String)">
+            <summary>
+            Opens channel for reading. Channel must be created by process running without app container and it must be visible from all user sessions.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with InboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another reader),
+            OperationStatus.ObjectDoesNotExist or OperationStatus.AccessDenied
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.OpenOutboundLocalNoncontainerized(System.String)">
+            <summary>
+            Opens channel for writing. Channel must be created by process running without app container and it must be visible only from current user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer),
+            OperationStatus.ObjectDoesNotExist or OperationStatus.AccessDenied
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.OpenInboundLocalNoncontainerized(System.String)">
+            <summary>
+            Opens channel for reading. Channel must be created by process running without app container and it must be visible only from current user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with InboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer),
+            OperationStatus.ObjectDoesNotExist or OperationStatus.AccessDenied
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.CreateOutboundLocal(System.String)">
+            <summary>
+            Creates or reopens channel for writing. Channel will be visible from processes in the local user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, or OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer)
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.CreateOutboundLocal(System.String,System.Int64)">
+            <summary>
+            Creates or reopens channel for writing. Channel will be visible from processes in the local user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <param name="capacity">Capacity of the cannel's queue in bytes.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer)
+            or OperationStatus.CapacityIsGreaterThanLogicalAddressSpace
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.CreateInboundLocal(System.String)">
+            <summary>
+            Creates or reopens channel for reading. Channel will be visible from processes in the local user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, or OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer)
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.Channel.CreateInboundLocal(System.String,System.Int64)">
+            <summary>
+            Creates or reopens channel for reading. Channel will be visible from processes in the local user session.
+            </summary>
+            <param name="name">Channel name.</param>
+            <param name="capacity">Capacity of the cannel's queue in bytes.</param>
+            <returns>
+            OperationResult with OutboundChannel and OperationStatus.Completed, OperationStatus.ObjectAlreadyInUse (when channel is already in use by another writer)
+            or OperationStatus.CapacityIsGreaterThanLogicalAddressSpace
+            </returns>
+        </member>
+        <member name="T:CorpusCallosum.InboundChannel">
+            <summary>
+            Inbound channel to read messages from the queue.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.InboundChannel.HasMessages">
+            <summary>
+            The flag indicating that there are active messages in the queue. This property is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream})">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream},System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream},System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus})">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus},System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, 
+            or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus},System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, 
+            or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, 
+            or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, or 
+            any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Read(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.CancellationToken,CorpusCallosum.OperationStatus},System.Object,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, or 
+            any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task})">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task},System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task},System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, or OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}})">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, 
+            or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, or 
+            any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, 
+            or any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, or 
+            any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.ReadAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.CancellationToken,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Reads and removes a message from the queue. This method is thread-safe.
+            </summary>
+            <param name="readingDelegate">Custom delegate to read using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.QueueIsEmpty, OperationStatus.Timeout, OperationStatus.Cancelled 
+            (when cancellation token is cancelled or delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, or 
+            any OperationStatus returned by readingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WaitWhenQueueHasMessages">
+            <summary>
+            Synchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WaitWhenQueueHasMessages(System.TimeSpan)">
+            <summary>
+            Synchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WaitWhenQueueHasMessages(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Synchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WhenQueueHasMessagesAsync">
+            <summary>
+            Asynchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WhenQueueHasMessagesAsync(System.TimeSpan)">
+            <summary>
+            Asynchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.WhenQueueHasMessagesAsync(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Asynchronously waits until writer will add new messafe to the queue. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.Equals(System.Object)">
+            <summary>
+            Compares this InboundChannel with another one.
+            </summary>
+            <param name="other">Another instance of InboundChannel.</param>
+            <returns>True when not null and equals.</returns>
+        </member>
+        <member name="M:CorpusCallosum.InboundChannel.GetHashCode">
+            <summary>
+            Get hash for this InboundChannel.
+            </summary>
+            <returns>
+            Int hash.
+            </returns>
+        </member>
+        <member name="T:CorpusCallosum.OutboundChannel">
+            <summary>
+            Outbound channel to write messages into the queue.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.OutboundChannel.IsEmpty">
+            <summary>
+            The flag indicating that there are no active messages in the queue. This property is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream},System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream},System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Action{System.IO.MemoryMappedFiles.MemoryMappedViewStream},System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus},System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus},System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,CorpusCallosum.OperationStatus},System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object,System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object,System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,CorpusCallosum.OperationStatus},System.Object,System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Write(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.CancellationToken,CorpusCallosum.OperationStatus},System.Object,System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task},System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task},System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace        
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task},System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace or OperationStatus.OutOfSpace
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Int64)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Int64,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when delegate throws OperationCancelledException),
+            OperationStatus.DelegateFailed (when delegate throws other exceptions), OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace,
+            OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace, OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WriteAsync(System.Func{System.IO.MemoryMappedFiles.MemoryMappedViewStream,System.Object,System.Threading.CancellationToken,System.Threading.Tasks.Task{CorpusCallosum.OperationStatus}},System.Object,System.Int64,System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Adds new message to the queue. This method is thread-safe.
+            </summary>
+            <param name="writingDelegate">Custom delegate to write using message's stream.</param>
+            <param name="parameter">Delegate parameter object.</param>
+            <param name="length">
+            Specifies how much memory will be allocated for new message.
+            Delegate will receive a stream with capacity limited by this parameter, but it is not forced to use all allocated space.
+            </param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationResult with ChannelState and OperationStatus.Completed, OperationStatus.Timeout, OperationStatus.Cancelled (when cancellation token is cancelled or
+            delegate throws OperationCancelledException), OperationStatus.DelegateFailed (when delegate throws other exceptions), 
+            OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace, OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace,
+            OperationStatus.OutOfSpace or any OperationStatus returned by writingDelegate
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WaitWhenQueueIsEmpty">
+            <summary>
+            Synchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WaitWhenQueueIsEmpty(System.TimeSpan)">
+            <summary>
+            Synchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WaitWhenQueueIsEmpty(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Synchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WhenQueueIsEmptyAsync">
+            <summary>
+            Asynchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WhenQueueIsEmptyAsync(System.TimeSpan)">
+            <summary>
+            Asynchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed or OperationStatus.Timeout.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.WhenQueueIsEmptyAsync(System.Threading.CancellationToken,System.TimeSpan)">
+            <summary>
+            Asynchronously waits until reader will process all messages and queue will be empty. This method is thread-safe.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <param name="timeout">Operation timeout.</param>
+            <returns>
+            OperationStatus.Completed, OperationStatus.Timeout or OperationStatus.Cancelled.
+            </returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.Equals(System.Object)">
+            <summary>
+            Compares this OutboundChannel with another one.
+            </summary>
+            <param name="other">Another instance of OutboundChannel.</param>
+            <returns>True when not null and equals.</returns>
+        </member>
+        <member name="M:CorpusCallosum.OutboundChannel.GetHashCode">
+            <summary>
+            Get hash for this OutboundChannel.
+            </summary>
+            <returns>
+            Int hash.
+            </returns>
+        </member>
+        <member name="T:CorpusCallosum.ChannelState">
+            <summary>
+            The state of the channel afer operation.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.ChannelState.AllocatedSpace">
+            <summary>
+            Number of bytes allocated for memory mapped file.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.ChannelState.MessagesCount">
+            <summary>
+            Number of messages in the queue.
+            </summary>
+        </member>
+        <member name="T:CorpusCallosum.OperationStatus">
+            <summary>
+            Enum indicating operation completion status
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.Completed">
+            <summary>
+            Operation completed.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.ObjectAlreadyInUse">
+            <summary>
+            Shared memory and synchronization objects associated with this channel name are already in use by another process or channel was not properly disposed after last use.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.ObjectDoesNotExist">
+            <summary>
+            The channel with the specified name does not exist.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.CapacityIsGreaterThanLogicalAddressSpace">
+            <summary>
+            Cannot create channel because memory mapped file cannot be as large as specified capacity.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.ElevationRequired">
+            <summary>
+            Current user does not have permissions to create global named objects. Administrative accounts, LocalService and NetworkService have this permission out of the box.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.AccessDenied">
+            <summary>
+            Channel exists, but process serving it did not grant access to this client. To access channel from UWP app container, generate container's SID and add it to ACL when you create the channel.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.RequestedLengthIsGreaterThanLogicalAddressSpace">
+            <summary>
+            Requested message length is too large.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.RequestedLengthIsGreaterThanVirtualAddressSpace">
+            <summary>
+            Requested message length is too large.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.QueueIsEmpty">
+            <summary>
+            There are no messages in the queue.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.Timeout">
+            <summary>
+            Time is up and the operation was not performed. During this time, other operations continued to execute exclusively, or the expected event did not occur. 
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.Cancelled">
+            <summary>
+            Operation was cancelled.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.OutOfSpace">
+            <summary>
+            Memory mapped file capacity limit reached and message with specified length cannot be added to the queue right now. You can try to write it later.
+            </summary>
+        </member>
+        <member name="F:CorpusCallosum.OperationStatus.DelegateFailed">
+            <summary>
+            Delegate threw an exception and operation wasn't completed. When it happens, writing operations don't add new message to the queue, reading operations don't remove it.
+            </summary>
+        </member>
+        <member name="T:CorpusCallosum.OperationResult`1">
+            <summary>
+            Operation result.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.OperationResult`1.Status">
+            <summary>
+            Status of the operation.
+            </summary>
+        </member>
+        <member name="P:CorpusCallosum.OperationResult`1.Data">
+            <summary>
+            Data obtained as a result of the operation.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -145,7 +145,7 @@ namespace CorpusCallosum
 
                 var fileOperationResult = LifecycleHelper.CreateMemoryMappedFile(fullName, capacity, acl);
 
-                if (fileOperationResult.Status != OperationStatus.Completed)
+                if (fileOperationResult.Status != OperationStatus.Completed && fileOperationResult.Status != OperationStatus.ObjectAlreadyInUse)
                 {
                     LifecycleHelper.PlatformSpecificDispose(readerSemaphore);
 
@@ -164,7 +164,16 @@ namespace CorpusCallosum
 
                 writerSemaphore = LifecycleHelper.CreateWriterSemaphore(fullName, acl);
 
-                var result = new InboundChannel(name, readerSemaphore, exclusiveAccessSemaphore, file, capacity, hasMessagesEvent, noMessagesEvent, clientConnectedEvent, writerSemaphore);
+                InboundChannel result;
+
+                if (fileOperationResult.Status == OperationStatus.ObjectAlreadyInUse)
+                {
+                    result = new InboundChannel(name, readerSemaphore, exclusiveAccessSemaphore, file, hasMessagesEvent, noMessagesEvent, clientConnectedEvent, writerSemaphore);
+                }
+                else
+                {
+                    result = new InboundChannel(name, readerSemaphore, exclusiveAccessSemaphore, file, capacity, hasMessagesEvent, noMessagesEvent, clientConnectedEvent, writerSemaphore);
+                }
 
                 return new OperationResult<InboundChannel>(OperationStatus.Completed, result);
             }

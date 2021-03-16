@@ -45,7 +45,7 @@ namespace CorpusCallosum.SharedObjects.MemoryManagement.WritingOperations
 
                 try
                 {
-                    return _writingDelegate(stream);
+                    return GetAllowedExecutionStatus(_writingDelegate(stream));
                 }
                 catch (OperationCanceledException)
                 {
