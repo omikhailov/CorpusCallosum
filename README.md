@@ -2,6 +2,7 @@
 Library for interprocess communication between noncontainerized .Net and containerized UWP apps and services.
 
 https://www.nuget.org/packages/CorpusCallosum
+
 https://www.nuget.org/packages/CorpusCallosum.WinRT
 
 The main scenario for using this library is the interaction between a Windows Service and a desktop UWP app, although it can also be used to interact with a WPF / WinForms application or even for communication between two non-UWP processes. The library does not impose restrictions on the UWP app, it can be sideloaded or installed from the store. Also, no special capabilities are required.
